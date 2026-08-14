@@ -130,41 +130,19 @@ The file is organized into the following sections:
 
 Copy `backend/.env.example` to `.env` and replace the example values with your own credentials before starting the application.
 
-### 2. Setup Backend
+### Redis
 
-```bash
-cd backend
-npm install
-cp .env.example .env
-# Fill in your DB credentials and secrets
-npm run migrate
-npm run seed
-npm run dev
-```
+Redis is **optional for local development**.
 
----
+When Redis is available, Redis-dependent features such as distributed rate limiting, session caching, and WebSocket coordination are enabled.
 
-### 3. Setup Frontend
+If Redis is unavailable, the backend continues running in **degraded mode**. The application logs the affected features clearly at startup and uses fallback behavior where supported.
 
-```bash
-cd frontend
-npm install
-cp .env.example .env
-# Fill in your VITE_API_BASE_URL
-npm run dev
-```
+Degraded features may include:
 
----
-
-## 🌐 Access the Application
-
-Open your browser and go to:
-
-```
-http://localhost:5173
-```
-
----
+- Rate limiting may use in-memory storage.
+- Session caching may be disabled or use fallback storage.
+- WebSocket coordination may run in local/in-process mode.
 
 ## 📁 Project Structure
 
